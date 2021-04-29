@@ -1,6 +1,28 @@
-<svg class="jordan" viewBox="0 0 864.34 1299.57" stroke="rgba(255,255,255,1)">
-<defs>
+<style>
+/* SVG JORDAN STYLING */
+.ajaxContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
+.jordan path {
+  fill: url(#jordanGradient);
+  stroke-width: 1px;
+  stroke: rgba(80,80,80,.35);
+  backface-visibility: hidden;
+}
+
+@media (min-width: 500px) {
+  .jordan path {
+    stroke-width: .4px;
+  }
+}
+</style>
+<div class="animation-wrapper">
+  <div class="jordan-animation">
+    <svg class="jordan" viewBox="0 0 864.34 1299.57" stroke="rgba(255,255,255,1)">
+<defs>
 <linearGradient id="jordanGradient" x1="5%" x2="5%" y1="0%" y2="5%">
 <stop stop-color="#373734" offset="0%"/>
 <stop stop-color="#242423" offset="50%"/>
@@ -70,3 +92,94 @@
 </g>
 </g>
 </svg>
+
+
+<!-- START jordan ANIME.JS -->
+<script>
+function fitElementToParent(el, padding) {
+  var timeout = null;
+  function resize() {
+    if (timeout) clearTimeout(timeout);
+    anime.set(el, {scale: 1});
+    var pad = padding || 0;
+    var parentEl = el.parentNode;
+    var elOffsetWidth = el.offsetWidth - pad;
+    var parentOffsetWidth = parentEl.offsetWidth;
+    var ratio = parentOffsetWidth / elOffsetWidth;
+    timeout = setTimeout(anime.set(el, {scale: ratio}), 10);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+}
+
+var sphereAnimation = (function() {
+
+  var sphereEl = document.querySelector('.ajaxContent');
+  var spherePathEls = sphereEl.querySelectorAll('.jordan path');
+  var pathLength = spherePathEls.length;
+  var hasStarted = false;
+  var aimations = [];
+
+  fitElementToParent(sphereEl);
+
+  var breathAnimation = anime({
+    begin: function() {
+      for (var i = 0; i < pathLength; i++) {
+        aimations.push(anime({
+          targets: spherePathEls[i],
+          stroke: {value: ['rgba(255,75,75,1)', 'rgba(80,80,80,.35)'], duration: 500},
+          translateX: [2, -4],
+          translateY: [2, -4],
+          easing: 'easeOutQuad',
+          autoplay: false
+        }));
+      }
+    },
+    update: function(ins) {
+      aimations.forEach(function(animation, i) {
+        var percent = (1 - Math.sin((i * .35) + (.0022 * ins.currentTime))) / 2;
+        animation.seek(animation.duration * percent);
+      });
+    },
+    duration: Infinity,
+    autoplay: false
+  });
+
+  var introAnimation = anime.timeline({
+    autoplay: false
+  })
+  .add({
+    targets: spherePathEls,
+    strokeDashoffset: {
+      value: [anime.setDashoffset, 0],
+      duration: 3900,
+      easing: 'easeOutCubic',
+      delay: anime.stagger(190, {direction: 'reverse'})
+    },
+    duration: 2000,
+    delay: anime.stagger(60, {direction: 'reverse'}),
+    easing: 'linear'
+  }, 0);
+
+  var shadowAnimation = anime({
+      targets: '#jordanGradient',
+      x1: '25%',
+      x2: '25%',
+      y1: '0%',
+      y2: '75%',
+      duration: 30000,
+      easing: 'easeOutQuint',
+      autoplay: false
+    }, 0);
+
+  function init() {
+    introAnimation.play();
+    breathAnimation.play();
+    shadowAnimation.play();
+  }
+  
+  init();
+
+})();
+</script>
+<!-- END jordan ANIME.JS -->
