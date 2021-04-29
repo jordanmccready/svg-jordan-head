@@ -163,6 +163,8 @@ var sphereAnimation = (function() {
     easing: 'linear'
   }, 0);
  
+  
+  
   var darkFace = document.querySelector('.jordan .cls-1');
   var lightFace = document.querySelector('.jordan .cls-2');
   var headTeeth = document.querySelector('.jordan .cls-3');
@@ -175,7 +177,7 @@ var sphereAnimation = (function() {
     begin: function() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
-          targets: '.cls-1',
+          targets: darkFace,
           fill: {value: ['rgba(220,200,200,1)', 'rgba(180,180,180,1)'], duration: 1000},
           easing: 'easeOutCubic',
           autoplay: false
