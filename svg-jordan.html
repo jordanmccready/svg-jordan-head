@@ -97,7 +97,7 @@
 <script>
   
 /* START CodePen.io ANIME.JS SCRIPT */
-  
+
 function fitElementToParent(el, padding) {
   var timeout = null;
   function resize() {
@@ -129,11 +129,11 @@ var sphereAnimation = (function() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
           targets: spherePathEls[i],
-          stroke: {value: ['rgba(255,255,255,.5)', 'rgba(54,52,50,1)'], duration: 500},
+          stroke: {value: ['#ffff00', '#363432'], duration: 1000},
           translateX: [10, -10],
           translateY: [10, -10],
           easing: 'easeOutQuad',
-          autoplay: false
+          autoplay: true
         }));
       }
     },
@@ -148,7 +148,10 @@ var sphereAnimation = (function() {
   });
 
   var introAnimation = anime.timeline({
-    autoplay: false
+    loop: true,
+    autoplay: false,
+    easing: 'easeInOutSine',
+    direction: 'alternate'
   })
   .add({
     targets: spherePathEls,
@@ -159,45 +162,13 @@ var sphereAnimation = (function() {
       delay: anime.stagger(190, {direction: 'reverse'})
     },
     duration: 2000,
-    delay: anime.stagger(60, {direction: 'reverse'}),
+    delay: anime.stagger(80, {direction: 'reverse'}),
     easing: 'linear'
   }, 0);
- 
-  
-  
-  var darkFace = document.querySelector('.jordan .cls-1');
-  var lightFace = document.querySelector('.jordan .cls-2');
-  var headTeeth = document.querySelector('.jordan .cls-3');
-  var noseOutline = document.querySelector('.jordan .cls-4');
-  var headOutline = document.querySelector('.jordan .cls-5');
-  var leftEye = document.querySelector('.jordan .cls-6');
-  var rightEye = document.querySelector('.jordan .cls-7');
-  
-  var facecolorAnimation = anime({
-    begin: function() {
-      for (var i = 0; i < pathLength; i++) {
-        aimations.push(anime({
-          targets: darkFace,
-          fill: {value: ['rgba(220,200,200,1)', 'rgba(180,180,180,1)'], duration: 1000},
-          easing: 'easeOutCubic',
-          autoplay: false
-        }));
-      }
-    },
-    update: function(ins) {
-      aimations.forEach(function(animation, i) {
-        var percent = (1 - Math.sin((i * .35) + (.0022 * ins.currentTime))) / 2;
-        animation.seek(animation.duration * percent);
-      });
-    },
-    duration: Infinity,
-    autoplay: false
-  });
 
   function init() {
     introAnimation.play();
     breathAnimation.play();
-    facecolorAnimation.play();
   }
   
   init();
