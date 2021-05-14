@@ -1,7 +1,6 @@
+<!-- CSS START -->
 <style>
-/* START CodePen.io SVG CONTAINER STYLING */
-
-.ajaxContent {
+.ajaxContent-jordan {
   position: relative;
   margin: auto;
 }
@@ -15,10 +14,11 @@
     stroke-width: 2px;
   }
 }
-/* END CodePen.io SVG CONTAINER STYLING */ 
 </style>
 
-<!-- START CodePen.io SVG STYLING -->
+<!-- CSS END -->
+<!-- SVG START -->
+
 <svg class="jordan" viewBox="-10 -10 900 1400" stroke="#363432" width="400px">
     <defs>
       <style>
@@ -30,8 +30,6 @@
           .left-eye{fill:#fff;} /* leftEye */
           .right-eye{fill:#fff;} /* rightEye */
       </style>
-<!-- END CodePen.io SVG STYLING -->
-      
     </defs>
   <g id="Layer_2" data-name="Layer 2">
     <g id="Layer_7" data-name="Layer 7">
@@ -94,10 +92,12 @@
     </g>
   </g>
 </svg>
+
+<!-- SVG END -->
+<!-- ANIME START -->
+
 <script>
   
-/* START CodePen.io ANIME.JS SCRIPT */
-
 function fitElementToParent(el, padding) {
   var timeout = null;
   function resize() {
@@ -114,21 +114,21 @@ function fitElementToParent(el, padding) {
   window.addEventListener('resize', resize);
 }
 
-var sphereAnimation = (function() {
+var jordanAnimation = (function() {
 
-  var sphereEl = document.querySelector('.ajaxContent');
-  var spherePathEls = sphereEl.querySelectorAll('.jordan path');
-  var pathLength = spherePathEls.length;
+  var jordanEl = document.querySelector('.ajaxContent-jordan');
+  var jordanPathEls = jordanEl.querySelectorAll('.jordan path');
+  var pathLength = jordanPathEls.length;
   var hasStarted = false;
   var aimations = [];
 
-  fitElementToParent(sphereEl);
+  fitElementToParent(jordanEl);
 
   var breathAnimation = anime({
     begin: function() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
-          targets: spherePathEls[i],
+          targets: jordanPathEls[i],
           stroke: {value: ['#ffff00', '#363432'], duration: 1000},
           translateX: [10, -10],
           translateY: [10, -10],
@@ -154,7 +154,7 @@ var sphereAnimation = (function() {
     direction: 'alternate'
   })
   .add({
-    targets: spherePathEls,
+    targets: jordanPathEls,
     strokeDashoffset: {
       value: [anime.setDashoffset, 0],
       duration: 3900,
@@ -175,8 +175,6 @@ var sphereAnimation = (function() {
 
 })();
   
-/* END CodePen.io ANIME.JS SCRIPT */
-
 </script>
 
-
+<!-- ANIME END -->
